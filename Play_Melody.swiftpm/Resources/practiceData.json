@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1001,
+        "isLeftHand": true,
+        "name": "Do(Low)",
+        "note": "do"
+    },
+    {
+        "id": 1002,
+        "isLeftHand": true,
+        "name": "Re",
+        "note": "re"
+    },
+    {
+        "id": 1003,
+        "isLeftHand": true,
+        "name": "Mi",
+        "note": "mi"
+    },
+    {
+        "id": 1004,
+        "isLeftHand": true,
+        "name": "Fa",
+        "note": "fa"
+    },
+    {
+        "id": 1005,
+        "isLeftHand": false,
+        "name": "Sol",
+        "note": "sol"
+    },
+    {
+        "id": 1006,
+        "isLeftHand": false,
+        "name": "Ra",
+        "note": "ra"
+    },
+    {
+        "id": 1007,
+        "isLeftHand": false,
+        "name": "Si",
+        "note": "si"
+    },
+    {
+        "id": 1008,
+        "isLeftHand": false,
+        "name": "Do(High)",
+        "note": "doHigh"
+    },
+]
