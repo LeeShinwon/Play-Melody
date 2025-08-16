@@ -1,15 +1,10 @@
 import SwiftUI
 
 @main
-struct MelodyApp: App {
-    @State var modelData = ModelData()
-    
+struct MelodyApp: App {    
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                ContentView()    
-            }
-            .environment(modelData)
+            ContentView()    
         }
     }
 }

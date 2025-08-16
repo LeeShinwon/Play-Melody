@@ -57,17 +57,6 @@ class CameraViewController: UIViewController {
         cameraFeedSession?.stopRunning()
         super.viewWillDisappear(animated)
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        previewLayer?.frame = view.bounds
-
-        if let orientation = UIDevice.current.videoRotationAngle,
-           let connection = previewLayer?.connection,
-           connection.isVideoRotationAngleSupported(orientation) {
-            connection.videoRotationAngle = orientation
-        }
-    }
 
 
     func setupAVSession() throws {
@@ -124,16 +113,8 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
             .thumbTip, .indexTip, .middleTip, .ringTip, .littleTip,
                 .thumbMP, .littleMCP
         ]
-        
-        let cgOrientation: CGImagePropertyOrientation = DispatchQueue.main.sync {
-            if let ori = CGImagePropertyOrientation(orientation: UIDevice.current.orientation) {
-                return ori
-            } else {
-                return .up
-            }
-        }
-            
-        let handler = VNImageRequestHandler(cmSampleBuffer: sampleBuffer, orientation: cgOrientation, options: [:]) // .up
+
+        let handler = VNImageRequestHandler(cmSampleBuffer: sampleBuffer, orientation: .up, options: [:])
         let handPoseRequest = VNDetectHumanHandPoseRequest()
         handPoseRequest.maximumHandCount = 2
 
@@ -178,22 +159,15 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
     }
     
-    // Convert Vision coordinate system to SwiftUI coordinate system
+    // Convert Vision coordinate system to screen coordinate system
     @MainActor
     private func convertHandPoints(_ point: CGPoint) -> CGPoint {
         guard let previewLayer = self.previewLayer else { return .zero }
 
         let layerSize = previewLayer.bounds.size
-        let orientation = UIDevice.current.orientation
-
-        switch orientation {
-        case .landscapeLeft, .landscapeRight:
-            return CGPoint(x: point.x * layerSize.width,
-                           y: point.y * layerSize.height)
-        default:
-            return CGPoint(x: (1 - point.x) * layerSize.width,
-                           y: (1 - point.y) * layerSize.height)
-        }
+        
+        return CGPoint(x: (1 - point.x) * layerSize.width,
+                       y: (1 - point.y) * layerSize.height)
     }
     
     @MainActor
@@ -203,29 +177,5 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let thumbMP = points[5]
         let littleMCP = points[6]
         return (thumbMP.x < littleMCP.x) ? .left : .right
-    }
-}
-
-extension CGImagePropertyOrientation {
-    init?(orientation: UIDeviceOrientation) {
-        switch orientation {
-        case .landscapeLeft: self = .up
-        case .landscapeRight: self = .down
-        case .portrait: self = .right
-        case .portraitUpsideDown: self = .left
-        default: return nil
-        }
-    }
-}
-
-extension UIDevice {
-    var videoRotationAngle: CGFloat? {
-        switch self.orientation {
-        case .landscapeLeft: return 180
-        case .landscapeRight: return 0
-        case .portrait: return 90
-        case .portraitUpsideDown: return 270
-        default: return nil
-        }
     }
 }

@@ -11,42 +11,22 @@ import AVFoundation
 import Vision
 
 struct HandTrackingView: View {
-    @Environment(\.dismiss) var dismiss
-    
     @State private var hands: [HandPoints] = []
     @State var leftHandPinched = false
     @State var rightHandPinched = false
     @State var leftPinchedFinger: VNHumanHandPoseObservation.JointName?
     @State var rightPinchedFinger: VNHumanHandPoseObservation.JointName?
-    @State private var leftPinchCooldown: Timer? = nil
-    @State private var rightPinchCooldown: Timer? = nil
     
     private let leftProcessor = HandGestureProcessor()
     private let rightProcessor = HandGestureProcessor()
-    private let audioManager = AudioManager()
-    
-    var onPinch: (_ side: HandSide, _ note: String) -> Void
-    
+ 
     var body: some View {
         ZStack(alignment: .topLeading) {
             CameraView(hands: $hands)
             pointsView
-            
-             backButton
         }
-        .navigationBarHidden(true)
         .onChange(of: hands) {
             for hand in hands { processHand(hand) }
-        }
-    }
-    
-    private var backButton: some View {
-        Button(action: {
-            dismiss()
-        }) {
-            Image(systemName: "chevron.left")
-                .font(.title)
-                .padding()
         }
     }
 
@@ -62,9 +42,7 @@ struct HandTrackingView: View {
                 ForEach(points.indices, id: \.self) { j in
                     let point = points[j]
 
-//                    let isThumb = j == 0
                     let isPinched = (pinchIndex != nil)
-                    //(isThumb && pinchIndex != nil) || (j == pinchIndex)
                     let color: Color = isPinched ? .green : .red
                     
                     Circle()
@@ -74,20 +52,6 @@ struct HandTrackingView: View {
                 }
 
             }
-        }
-    }
-    
-    private func note(for finger: VNHumanHandPoseObservation.JointName?, side: HandSide) -> String? {
-        switch (side, finger) {
-        case (.left, .littleTip): return "do"
-        case (.left, .ringTip): return "re"
-        case (.left, .middleTip): return "mi"
-        case (.left, .indexTip): return "fa"
-        case (.right, .indexTip): return "sol"
-        case (.right, .middleTip): return "ra"
-        case (.right, .ringTip): return "si"
-        case (.right, .littleTip): return "doHigh"
-        default: return nil
         }
     }
     
@@ -107,7 +71,6 @@ struct HandTrackingView: View {
         let processor = (side == .left) ? leftProcessor : rightProcessor
         processor.processThumbAndFingers(thumb: thumb, fingerPoints: fingers)
 
-        let wasPinched = (side == .left) ? leftHandPinched : rightHandPinched
         let isPinched = processor.isPinched
         let pinchedFinger = processor.pinchedFinger
 
@@ -119,35 +82,11 @@ struct HandTrackingView: View {
             rightPinchedFinger = pinchedFinger
         }
 
-        let cooldownTimer = (side == .left) ? leftPinchCooldown : rightPinchCooldown
-        if isPinched && !wasPinched && cooldownTimer == nil {
-            if let note = note(for: pinchedFinger, side: side) {
-                audioManager.play(note: note)
-                onPinch(side, note)
-                setTimer(side: side)
-            }
-        } else if !isPinched && wasPinched {
-            audioManager.stopCurrent()
-        }
     }
-    
-    private func setTimer(side: HandSide) {
-        let newTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
-            if side == .left {
-                leftPinchCooldown = nil
-            } else {
-                rightPinchCooldown = nil
-            }
-        }
-        if side == .left {
-            leftPinchCooldown = newTimer
-        } else {
-            rightPinchCooldown = newTimer
-        }
-    }
+
 }
 
 
-//#Preview {
-//    HandTrackingView ()
-//}
+#Preview {
+    HandTrackingView ()
+}
