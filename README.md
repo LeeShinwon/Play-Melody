@@ -8,6 +8,7 @@ Play Melody is a **camera-based music app** that lets you perform melodies with 
 - **Contact**: leeshin1130@gmail.com
 - **App Score**: [View Here](https://apps.apple.com/kr/app/play-melody/id6749957721?l=en-GB&mt=12)
 - **Initial Demo Video**: [View Here](https://www.youtube.com/watch?v=Nsz66Aq19CE)
+- **Notion**: [View Here](https://www.notion.so/shinwonlee/Melody-SSC24-2453299b9fa48062aee2e9c024248443)
 - **Privacy Policy**: [View Here](https://github.com/LeeShinwon/LeeShinwon/wiki/Privacy-Policy)  
 - **Report a Bug / Request a Feature**: [GitHub Issues](https://github.com/LeeShinwon/Play-Melody/issues)  
 - **Supported Platforms**: Mac (macOS 15+)
