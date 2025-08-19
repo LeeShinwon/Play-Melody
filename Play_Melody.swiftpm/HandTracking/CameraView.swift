@@ -8,13 +8,9 @@
 import SwiftUI
 
 struct CameraView: UIViewControllerRepresentable {
-    @Binding var hands: [HandPoints]
 
     func makeUIViewController(context: Context) -> CameraViewController {
         let cameraViewController = CameraViewController()
-        cameraViewController.onHandPointsDetected = { detectedHands in
-            hands = detectedHands
-        }
         return cameraViewController
     }
 
