@@ -41,8 +41,11 @@ Play Melody is a **camera-based music app** that lets you perform melodies with 
      
       <img width="300" height="238" alt="Screenshot 2025-08-13 at 11 10 35 PM" src="https://github.com/user-attachments/assets/e29df3f7-8a7c-45a6-a8ba-ba1603075f29" />
       <img width="300" height="238" alt="image 5" src="https://github.com/user-attachments/assets/c3662ac5-e45f-4170-ba03-51fce22e3dce" />
----
 
+
+      <img width="878" height="687" alt="image" src="https://github.com/user-attachments/assets/c563a361-cc1d-4bc5-b0d5-77891fe3ab9f" />
+
+---
 ## ❓ FAQ
 
 **Q1. Does the app record or upload video?**  
