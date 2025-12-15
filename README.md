@@ -44,7 +44,8 @@ Play Melody is a **camera-based music app** that lets you perform melodies with 
 
 
 ## About Hand Tracking
-      <img width="878" height="687" alt="image" src="https://github.com/user-attachments/assets/c563a361-cc1d-4bc5-b0d5-77891fe3ab9f" />
+     
+<img width="878" height="687" alt="image" src="https://github.com/user-attachments/assets/74e6aa7d-8908-41f2-8af2-d70ebff4996c" />
 
 ---
 ## ❓ FAQ
